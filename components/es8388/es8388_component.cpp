@@ -1,3 +1,5 @@
+//https://github.com/esphome/esphome/blob/dev/LICENSE
+
 #include "es8388_component.h"
 #include "esphome/core/hal.h"
 

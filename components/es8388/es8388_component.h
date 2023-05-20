@@ -1,3 +1,5 @@
+//https://github.com/esphome/esphome/blob/dev/LICENSE
+
 #pragma once
 
 #include "esphome/components/i2c/i2c.h"
