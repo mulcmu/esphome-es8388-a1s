@@ -5,6 +5,9 @@
 
 #include "esphome/components/i2c/i2c.h"
 #include "esphome/core/component.h"
+#include "esphome/components/i2s_audio/i2s_audio.h"
+#include "esphome/components/i2s_audio/media_player/i2s_audio_media_player.h"
+
 #include <vector>
 
 #define ES8388_ADDR 0x10
@@ -102,7 +105,7 @@ typedef enum {
 namespace esphome {
 namespace es8388 {
 
-class ES8388Component : public Component, public i2c::I2CDevice {
+class ES8388Component : public i2c::I2CDevice, public i2s_audio::I2SAudioMediaPlayer {  
  public:
   void setup() override;
 
