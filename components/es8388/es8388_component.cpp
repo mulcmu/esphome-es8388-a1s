@@ -43,10 +43,24 @@ void ES8388Component::setup() {
   this->write_byte(0x03, 0xFF);
   // ADC amp 24dB
   this->write_byte(0x09, 0x88);
+  
+  //original
   // LINPUT1/RINPUT1
-  this->write_byte(0x0A, 0x00);
+  //this->write_byte(0x0A, 0x00);
+
+  //@nightdav
+  // Mic input : L-R differential
+  this->write_byte(0x0A, 0xF0);  
+
+  //original
   // ADC mono left
-  this->write_byte(0x0B, 0x02);
+  //this->write_byte(0x0B, 0x02);
+
+  //@nightdav
+  // set to Mono Right
+  this->write_byte(0x0B, 0x10);  
+
+  
   // i2S 16b
   this->write_byte(0x0C, 0x0C);
   // MCLK 256
