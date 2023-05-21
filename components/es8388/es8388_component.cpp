@@ -41,9 +41,13 @@ void ES8388Component::setup() {
 
   // ADC poweroff
   this->write_byte(0x03, 0xFF);
-  // ADC amp 24dB
-  this->write_byte(0x09, 0x88);
   
+  // ADC amp 24dB original
+  //this->write_byte(0x09, 0x88);
+  
+  //@nightdav
+  this->write_byte(0x09, 0x77); // +21dB : recommended value for ALC & voice recording
+
   //original
   // LINPUT1/RINPUT1
   //this->write_byte(0x0A, 0x00);
@@ -60,7 +64,7 @@ void ES8388Component::setup() {
   // set to Mono Right
   this->write_byte(0x0B, 0x10);  
 
-  
+
   // i2S 16b
   this->write_byte(0x0C, 0x0C);
   // MCLK 256
@@ -68,16 +72,31 @@ void ES8388Component::setup() {
   // ADC Volume
   this->write_byte(0x10, 0x00);
   this->write_byte(0x11, 0x00);
-  // ALC OFF
+  
+  // ALC OFF  original
+  //this->write_byte(0x03, 0x09);
+  //this->write_byte(0x2B, 0x80);
+
+  //@nightDav
+  // ALC Config (as recommended by ES8388 user guide for voice recording)
+  this->write_byte(0x12, 0xe2); // Reg 0x12 = 0xe2 (ALC enable, PGA Max. Gain=23.5dB, Min. Gain=0dB)
+  this->write_byte(0x13, 0xa0); // Reg 0x13 = 0xa0 (ALC Target=-1.5dB, ALC Hold time =0 mS)
+  this->write_byte(0x14, 0x12); // Reg 0x14 = 0x12(Decay time =820uS , Attack time = 416 uS)
+  this->write_byte(0x15, 0x06); // Reg 0x15 = 0x06(ALC mode)
+  this->write_byte(0x16, 0xc3); // Reg 0x16 = 0xc3(nose gate = -40.5dB, NGG = 0x01(mute ADC))
+
+  // Power on ADC 
   this->write_byte(0x03, 0x09);
   this->write_byte(0x2B, 0x80);
-
+  
+  
   this->write_byte(0x02, 0xF0);
   delay(1);
   this->write_byte(0x02, 0x00);
   // DAC power-up LOUT1/ROUT1 enabled
   this->write_byte(0x04, 0x30);
   this->write_byte(0x03, 0x00);
+  
   // DAC volume max
   this->write_byte(0x2E, 0x1C);
   this->write_byte(0x2F, 0x1C);
