@@ -10,8 +10,10 @@ void ES8388Component::setup() {
   PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO0_U, FUNC_GPIO0_CLK_OUT1);
   WRITE_PERI_REG(PIN_CTRL, READ_PERI_REG(PIN_CTRL) & 0xFFFFFFF0);
 
-  // mute
-  this->write_byte(0x19, 0x04);
+  // mute DAC
+  this->write_byte(0x19, 0x24);
+  // mute ADC
+  this->write_byte(0x0F, 0x30);
   // powerup
   this->write_byte(0x01, 0x50);
   this->write_byte(0x02, 0x00);
@@ -93,15 +95,20 @@ void ES8388Component::setup() {
   this->write_byte(0x02, 0xF0);
   delay(1);
   this->write_byte(0x02, 0x00);
-  // DAC power-up LOUT1/ROUT1 enabled
-  this->write_byte(0x04, 0x30);
+  // DAC power-up LOUT1/ROUT1 and LOUT2/ROUT2 enabled
+  this->write_byte(0x04, 0x3C);
   this->write_byte(0x03, 0x00);
-  
+
   // DAC volume max
   this->write_byte(0x2E, 0x1C);
   this->write_byte(0x2F, 0x1C);
-  // unmute
-  this->write_byte(0x19, 0x00);
+  // Headphone volume max
+  this->write_byte(0x30, 0x1C);
+  this->write_byte(0x31, 0x1C);
+  // unmute ADC with fade in
+  this->write_byte(0x0F, 0x60);
+  // unmute with DAC fade in
+  this->write_byte(0x19, 0x20);
 }
 
 }  // namespace es8388
