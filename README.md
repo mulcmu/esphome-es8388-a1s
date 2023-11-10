@@ -3,6 +3,16 @@ Work in progress to modify esphome [pr#3552](https://github.com/esphome/esphome/
 
 [vanbwodonk](https://github.com/vanbwodonk)/**[es8388arduino](https://github.com/vanbwodonk/es8388arduino)** Arduino library functions (will be) ported into esphome component.
 
+## YAML Example
+
+```
+external_components:
+  - source: github://mulcmu/esphome-es8388-a1s@nightdav-patch
+    components: [es8388]
+    refresh: 0s
+
+es8388:
+```
 
 
 ## Links
